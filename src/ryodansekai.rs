@@ -118,6 +118,11 @@ impl Default for HitDetectionArgument {
     }
 }
 
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
+pub struct DamageExpressionContext {
+    pub hit_detection_diff: Option<usize>
+}
+
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Evade {
     pub abillity: Abillity,
@@ -128,6 +133,6 @@ pub type HitDetectionExpression = dyn Fn(HitDetectionArgument) -> HitDetectionTa
 pub type EvadeExpression = dyn Fn(Evade) -> bool;
 pub type HitDetectionTarget = usize;
 
-pub type DamageExpression = dyn Fn(Abillity) -> Damage;
+pub type DamageExpression = dyn Fn(Abillity, DamageExpressionContext) -> Damage;
 
 type EvadeTargetValue = usize;
