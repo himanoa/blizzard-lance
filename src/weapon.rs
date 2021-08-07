@@ -144,8 +144,7 @@ impl<'a> OffensiveEquipment for MechanicalShootingWeapon {
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
         Box::new(|hit_detaction: HitDetectionArgument| {
-            let value = hit_detaction.dice_result + hit_detaction.abillity.dex as usize;
-            return value;
+            hit_detaction.dice_result + hit_detaction.abillity.dex as usize
         })
     }
     fn decision_count(&self) -> usize {
