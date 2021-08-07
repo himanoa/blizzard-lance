@@ -1,5 +1,7 @@
 use crate::equipment::{Equipment, OffensiveEquipment};
-use crate::ryodansekai::{Abillity, DamageExpression, HitDetectionExpression, HitDetectionArgument};
+use crate::ryodansekai::{
+    Abillity, DamageExpression, HitDetectionArgument, HitDetectionExpression,
+};
 
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct LightWeightWeapon {}
@@ -7,6 +9,8 @@ pub struct LightWeightWeapon {}
 pub struct MediumWeightWeapon {}
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct HeavyWeightWeapon {}
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
+pub struct PhysicalStrengthShootingWeapon {}
 
 impl Equipment for LightWeightWeapon {
     fn apply(&self, abillity: Abillity) -> Abillity {
@@ -16,9 +20,7 @@ impl Equipment for LightWeightWeapon {
 
 impl OffensiveEquipment for LightWeightWeapon {
     fn deal_damage_expression(&self) -> Box<DamageExpression> {
-        return Box::new(|abillity: Abillity| {
-            (abillity.py_str / 2 + 1) as usize
-        })
+        return Box::new(|abillity: Abillity| (abillity.py_str / 2 + 1) as usize);
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
         Box::new(|detection: HitDetectionArgument| {
@@ -45,15 +47,17 @@ impl OffensiveEquipment for MediumWeightWeapon {
         Box::new(|abillity: Abillity| {
             let value = abillity.py_str + 1;
             if value < 0 {
-                return 0
+                return 0;
             }
-            return value as usize
+            return value as usize;
         })
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
         Box::new(|hit_detaction: HitDetectionArgument| {
             let value = hit_detaction.dice_result as isize + hit_detaction.abillity.dex;
-            if value < 0 { return 0 }
+            if value < 0 {
+                return 0;
+            }
             value as usize
         })
     }
@@ -61,7 +65,6 @@ impl OffensiveEquipment for MediumWeightWeapon {
         2
     }
 }
-
 
 impl Equipment for HeavyWeightWeapon {
     fn apply(&self, abillity: Abillity) -> Abillity {
@@ -74,15 +77,17 @@ impl OffensiveEquipment for HeavyWeightWeapon {
         Box::new(|abillity: Abillity| {
             let value = abillity.py_str * 2 + 3;
             if value < 0 {
-                return 0
+                return 0;
             }
-            return value as usize
+            return value as usize;
         })
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
         Box::new(|hit_detaction: HitDetectionArgument| {
             let value = hit_detaction.dice_result as isize + hit_detaction.abillity.dex;
-            if value < 0 { return 0 }
+            if value < 0 {
+                return 0;
+            }
             value as usize
         })
     }
@@ -106,10 +111,16 @@ mod tests {
         let equipment: LightWeightWeapon = Default::default();
 
         assert_eq!(equipment.hit_detection_expression()(Default::default()), 7);
-        assert_eq!(equipment.hit_detection_expression()(HitDetectionArgument {
-            abillity: Abillity { dex: -3, ..Default::default() },
-            dice_result: 1
-        }), 0)
+        assert_eq!(
+            equipment.hit_detection_expression()(HitDetectionArgument {
+                abillity: Abillity {
+                    dex: -3,
+                    ..Default::default()
+                },
+                dice_result: 1
+            }),
+            0
+        )
     }
 
     #[test]
@@ -131,10 +142,16 @@ mod tests {
         let equipment: MediumWeightWeapon = Default::default();
 
         assert_eq!(equipment.hit_detection_expression()(Default::default()), 7);
-        assert_eq!(equipment.hit_detection_expression()(HitDetectionArgument {
-            abillity: Abillity { dex: -3, ..Default::default() },
-            dice_result: 1
-        }), 0)
+        assert_eq!(
+            equipment.hit_detection_expression()(HitDetectionArgument {
+                abillity: Abillity {
+                    dex: -3,
+                    ..Default::default()
+                },
+                dice_result: 1
+            }),
+            0
+        )
     }
 
     #[test]
@@ -156,10 +173,16 @@ mod tests {
         let equipment: HeavyWeightWeapon = Default::default();
 
         assert_eq!(equipment.hit_detection_expression()(Default::default()), 7);
-        assert_eq!(equipment.hit_detection_expression()(HitDetectionArgument {
-            abillity: Abillity { dex: -3, ..Default::default() },
-            dice_result: 1
-        }), 0)
+        assert_eq!(
+            equipment.hit_detection_expression()(HitDetectionArgument {
+                abillity: Abillity {
+                    dex: -3,
+                    ..Default::default()
+                },
+                dice_result: 1
+            }),
+            0
+        )
     }
 
     #[test]

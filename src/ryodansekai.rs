@@ -17,7 +17,7 @@ impl Default for Abillity {
             int: 1,
             con: 1,
             luck: 1,
-        }   
+        }
     }
 }
 
@@ -43,7 +43,7 @@ pub enum Feature {
     不幸好き,
     自己再生,
     ピンチに強い,
-    異形
+    異形,
 }
 
 // TODO: あとで英語に直す
@@ -113,7 +113,7 @@ impl Default for HitDetectionArgument {
     fn default() -> Self {
         HitDetectionArgument {
             abillity: Default::default(),
-            dice_result: 6
+            dice_result: 6,
         }
     }
 }
@@ -122,7 +122,7 @@ impl Default for HitDetectionArgument {
 pub struct Evade {
     pub abillity: Abillity,
     pub dice_result: usize,
-    pub evade_target_value: EvadeTargetValue
+    pub evade_target_value: EvadeTargetValue,
 }
 pub type HitDetectionExpression = dyn Fn(HitDetectionArgument) -> HitDetectionTarget;
 pub type EvadeExpression = dyn Fn(Evade) -> bool;
