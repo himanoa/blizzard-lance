@@ -22,7 +22,7 @@ impl Equipment for LightWeightWeapon {
 }
 
 impl OffensiveEquipment for LightWeightWeapon {
-    fn deal_damage_expression(&self, ) -> Box<DamageExpression> {
+    fn deal_damage_expression(&self) -> Box<DamageExpression> {
         Box::new(|abillity: Abillity, _| (abillity.py_str / 2 + 1) as usize)
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
