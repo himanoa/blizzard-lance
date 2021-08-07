@@ -120,7 +120,7 @@ impl Default for HitDetectionArgument {
 
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct DamageExpressionContext {
-    pub hit_detection_diff: Option<usize>
+    pub hit_detection_diff: Option<usize>,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]

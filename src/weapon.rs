@@ -1,5 +1,8 @@
 use crate::equipment::{Equipment, OffensiveEquipment};
-use crate::ryodansekai::{Abillity, DamageExpression, DamageExpressionContext, HitDetectionArgument, HitDetectionExpression};
+use crate::ryodansekai::{
+    Abillity, DamageExpression, DamageExpressionContext, HitDetectionArgument,
+    HitDetectionExpression,
+};
 
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct LightWeightWeapon {}
@@ -10,8 +13,7 @@ pub struct HeavyWeightWeapon {}
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct PhysicalStrengthShootingWeapon {}
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
-pub struct MechanicalShootingWeapon {
-}
+pub struct MechanicalShootingWeapon {}
 
 impl Equipment for LightWeightWeapon {
     fn apply(&self, abillity: Abillity) -> Abillity {
@@ -109,7 +111,7 @@ impl OffensiveEquipment for PhysicalStrengthShootingWeapon {
         Box::new(|abillity: Abillity, _| {
             let value = abillity.py_str as isize * 2 + 1;
             if value < 0 {
-                return 0
+                return 0;
             }
             value as usize
         })
@@ -134,7 +136,9 @@ impl<'a> Equipment for MechanicalShootingWeapon {
 impl<'a> OffensiveEquipment for MechanicalShootingWeapon {
     fn deal_damage_expression(&self) -> Box<DamageExpression> {
         Box::new(|_: Abillity, ctx: DamageExpressionContext| {
-            let hit_detection = ctx.hit_detection_diff.expect("機械射撃武器なのに命中判定の差が存在しません");
+            let hit_detection = ctx
+                .hit_detection_diff
+                .expect("機械射撃武器なのに命中判定の差が存在しません");
             5 + hit_detection
         })
     }
@@ -149,7 +153,6 @@ impl<'a> OffensiveEquipment for MechanicalShootingWeapon {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -157,7 +160,10 @@ mod tests {
     fn test_light_weight_weapon_deal_damage_expression() {
         let equipment: LightWeightWeapon = Default::default();
         let abillity: Abillity = Default::default();
-        assert_eq!(equipment.deal_damage_expression()(abillity, Default::default()), 1)
+        assert_eq!(
+            equipment.deal_damage_expression()(abillity, Default::default()),
+            1
+        )
     }
 
     #[test]
@@ -188,7 +194,10 @@ mod tests {
     fn test_medium_weight_weapon_deal_damage_expression() {
         let equipment: MediumWeightWeapon = Default::default();
         let abillity: Abillity = Default::default();
-        assert_eq!(equipment.deal_damage_expression()(abillity, Default::default()), 2)
+        assert_eq!(
+            equipment.deal_damage_expression()(abillity, Default::default()),
+            2
+        )
     }
 
     #[test]
@@ -219,7 +228,10 @@ mod tests {
     fn test_heavy_weight_weapon_deal_damage_expression() {
         let equipment: HeavyWeightWeapon = Default::default();
         let abillity: Abillity = Default::default();
-        assert_eq!(equipment.deal_damage_expression()(abillity, Default::default()), 5)
+        assert_eq!(
+            equipment.deal_damage_expression()(abillity, Default::default()),
+            5
+        )
     }
 
     #[test]
