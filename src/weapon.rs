@@ -22,8 +22,8 @@ impl Equipment for LightWeightWeapon {
 }
 
 impl OffensiveEquipment for LightWeightWeapon {
-    fn deal_damage_expression(&self) -> Box<DamageExpression> {
-        Box::new(|abillity: Abillity, _| (abillity.py_str / 2 + 1) as usize);
+    fn deal_damage_expression(&self, ) -> Box<DamageExpression> {
+        Box::new(|abillity: Abillity, _| (abillity.py_str / 2 + 1) as usize)
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
         Box::new(|detection: HitDetectionArgument| {
@@ -52,7 +52,7 @@ impl OffensiveEquipment for MediumWeightWeapon {
             if value < 0 {
                 return 0;
             }
-            value as usize;
+            value as usize
         })
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
@@ -82,7 +82,7 @@ impl OffensiveEquipment for HeavyWeightWeapon {
             if value < 0 {
                 return 0;
             }
-            value as usize;
+            value as usize
         })
     }
     fn hit_detection_expression(&self) -> Box<HitDetectionExpression> {
