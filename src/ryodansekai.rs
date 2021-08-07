@@ -1,3 +1,5 @@
+use std::default::Default;
+
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Abillity {
     pub py_str: isize,
@@ -5,6 +7,18 @@ pub struct Abillity {
     pub int: isize,
     pub con: isize,
     pub luck: isize,
+}
+
+impl Default for Abillity {
+    fn default() -> Self {
+        Self {
+            py_str: 1,
+            dex: 1,
+            int: 1,
+            con: 1,
+            luck: 1,
+        }   
+    }
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -17,37 +31,7 @@ pub struct Actor {
     pub skills: Vec<Skill>,
 }
 
-type Damage = usize;
-
-type HitDetectionTarget = usize;
-
-type DamageExpression = dyn Fn(Abillity, usize) -> Damage;
-
-type EvadeTargetValue = usize;
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct HitDetectionArgument {
-    abillity: Abillity,
-    dice_result: usize,
-}
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct Evade {
-    abillity: Abillity,
-    dice_result: usize,
-    evade_target_value: EvadeTargetValue
-}
-
-type HitDetectionExpression = dyn Fn(HitDetectionArgument) -> HitDetectionTarget;
-type EvadeExpression = dyn Fn(Evade) -> bool;
-
-pub trait Equipment {
-    fn apply(&self, abillity: Abillity) -> Abillity;
-    fn deal_damage_expression(&self) -> Box<DamageExpression>;
-    fn take_damage_expression(&self) -> Box<DamageExpression>;
-    fn hit_detection_expression(&self) -> Box<HitDetectionExpression>;
-    fn evade_expression(&self) -> Box<EvadeExpression>;
-}
+pub type Damage = usize;
 
 // TODO: あとで英語に直す
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -118,3 +102,32 @@ pub enum Skill {
     支援,
     集中,
 }
+
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub struct HitDetectionArgument {
+    pub abillity: Abillity,
+    pub dice_result: usize,
+}
+
+impl Default for HitDetectionArgument {
+    fn default() -> Self {
+        HitDetectionArgument {
+            abillity: Default::default(),
+            dice_result: 6
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub struct Evade {
+    pub abillity: Abillity,
+    pub dice_result: usize,
+    pub evade_target_value: EvadeTargetValue
+}
+pub type HitDetectionExpression = dyn Fn(HitDetectionArgument) -> HitDetectionTarget;
+pub type EvadeExpression = dyn Fn(Evade) -> bool;
+pub type HitDetectionTarget = usize;
+
+pub type DamageExpression = dyn Fn(Abillity) -> Damage;
+
+type EvadeTargetValue = usize;
