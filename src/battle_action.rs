@@ -27,7 +27,7 @@ pub fn reducer(prev_battle_field: &BattleField, action: &ActorAction) -> BattleF
 }
 
 pub trait BattleFieldMutation {
-    fn dispatch(&mut self, action: &ActorAction) -> ();
+    fn dispatch(&mut self, action: &ActorAction);
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -37,7 +37,7 @@ pub struct BattleFieldMutationImpl {
 }
 
 impl BattleFieldMutation for BattleFieldMutationImpl {
-    fn dispatch(&mut self, action: &ActorAction) -> () {
+    fn dispatch(&mut self, action: &ActorAction){
         self.current_state = reducer(&self.current_state, action);
         self.applied_actions.push(action.clone());
     }
