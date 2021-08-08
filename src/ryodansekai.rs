@@ -36,7 +36,7 @@ pub struct Actor {
 }
 
 impl Actor {
-    pub fn is_unable_to_fight(self) {
+    pub fn unabled_to_fight(&self) -> bool {
         unimplemented!()
     }
 }

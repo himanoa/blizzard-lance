@@ -22,7 +22,7 @@ pub enum ActorAction {
     Wait(),
 }
 
-pub fn reducer(prev_battle_field: &BattleField, action: &ActorAction) -> BattleField {
+pub fn reducer(_prev_battle_field: &BattleField, _action: &ActorAction) -> BattleField {
     todo!()
 }
 
@@ -37,8 +37,8 @@ pub struct BattleFieldMutationImpl<'a> {
 }
 
 impl<'a> BattleFieldMutation for BattleFieldMutationImpl<'a> {
-    fn dispatch(&mut self, action: &ActorAction){
-        *self.current_state = reducer(&self.current_state, action);
+    fn dispatch(&mut self, action: &ActorAction) {
+        *self.current_state = reducer(self.current_state, action);
         self.applied_actions.push(action.clone());
     }
 }
