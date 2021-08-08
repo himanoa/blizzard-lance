@@ -1,5 +1,5 @@
 use std::default::Default;
-use crate::{equipment::{self, OffensiveEquipment}, weapon::{HeavyWeightWeapon, Weapon}};
+use crate::weapon::Weapon;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Abillity {
@@ -22,10 +22,10 @@ impl Default for Abillity {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct ActorId(String);
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct Actor {
     pub id: ActorId,
     pub abillity: Abillity,
