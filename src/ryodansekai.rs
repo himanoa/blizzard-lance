@@ -1,4 +1,5 @@
 use std::default::Default;
+use crate::{equipment::{self, OffensiveEquipment}, weapon::{HeavyWeightWeapon, Weapon}};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Abillity {
@@ -29,6 +30,13 @@ pub struct Actor {
     pub id: ActorId,
     pub abillity: Abillity,
     pub skills: Vec<Skill>,
+    pub weapons: Vec<Weapon>,
+}
+
+impl Actor {
+    pub fn is_unable_to_fight(self) {
+        unimplemented!()
+    }
 }
 
 pub type Damage = usize;

@@ -152,6 +152,15 @@ impl<'a> OffensiveEquipment for MechanicalShootingWeapon {
     }
 }
 
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub enum Weapon {
+    LightWeightWeapon(LightWeightWeapon),
+    MediumWeightWeapon(MediumWeightWeapon),
+    HeavyWeightWeapon(HeavyWeightWeapon),
+    PhysicalStrengthShootingWeapon(PhysicalStrengthShootingWeapon),
+    MechanicalShootingWeapon(MechanicalShootingWeapon)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
