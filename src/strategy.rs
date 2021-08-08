@@ -15,7 +15,7 @@ pub trait ActionStrategy {
 }
 
 pub trait PreemptiveStrategy {
-    fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<()>;
+    fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<usize>;
 }
 
 pub trait BattleStrategy {

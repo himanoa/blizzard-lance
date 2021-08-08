@@ -11,14 +11,14 @@ use crate::Result;
 pub struct DummyStrategy {}
 
 impl ActionStrategy for DummyStrategy {
-    fn execute(&self, ctx: &ActionStrategyContext) -> Result<()> {
+    fn execute(&self, _ctx: &ActionStrategyContext) -> Result<()> {
         Ok(())
     }
 }
 
 impl PreemptiveStrategy for DummyStrategy {
-    fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<()> {
-        Ok(())
+    fn execute(&self, _ctx: &PreemptiveStrategyContext) -> Result<usize> {
+        Ok(12)
     }
 }
 
