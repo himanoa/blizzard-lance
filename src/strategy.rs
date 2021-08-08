@@ -18,7 +18,5 @@ pub trait PreemptiveStrategy {
     fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<usize>;
 }
 
-pub trait BattleStrategy {
-    fn action_stragegy(&self) -> Box<&dyn ActionStrategy>;
-    fn preemptive_strategy(&self) -> Box<&dyn PreemptiveStrategy>;
+pub trait BattleStrategy: ActionStrategy + PreemptiveStrategy {
 }

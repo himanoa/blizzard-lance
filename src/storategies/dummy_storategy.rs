@@ -22,13 +22,5 @@ impl PreemptiveStrategy for DummyStrategy {
     }
 }
 
-impl BattleStrategy for DummyStrategy {
-    fn action_stragegy(&self) -> Box<&dyn ActionStrategy> {
-        Box::new(self)
-    }
-
-    fn preemptive_strategy(&self) -> Box<&dyn PreemptiveStrategy> {
-        Box::new(self)
-    }
-}
+impl BattleStrategy for DummyStrategy {}
 
