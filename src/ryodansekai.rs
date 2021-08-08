@@ -8,6 +8,7 @@ pub struct Abillity {
     pub int: isize,
     pub con: isize,
     pub luck: isize,
+    pub will_power: usize,
 }
 
 impl Default for Abillity {
@@ -18,6 +19,7 @@ impl Default for Abillity {
             int: 1,
             con: 1,
             luck: 1,
+            will_power: 2,
         }
     }
 }

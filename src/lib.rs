@@ -1,4 +1,5 @@
 pub mod battle;
+pub mod battle_action;
 pub mod equipment;
 pub mod error;
 pub mod ryodansekai;
