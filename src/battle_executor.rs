@@ -26,7 +26,7 @@ impl BattleExecutor {
     }
 
     pub fn execute_preemptive_phase(&self) -> Vec<(BattleActor, usize)> {
-        let result: Vec<(BattleActor, usize)> = BattleExecutor::get_battle_field(self.battle_field.clone())
+        let mut result: Vec<(BattleActor, usize)> = BattleExecutor::get_battle_field(self.battle_field.clone())
             .available_actors()
             .map(move |actor| match &actor.strategy {
                 Strategies::DummyStrategy(strategy) => {
@@ -43,6 +43,10 @@ impl BattleExecutor {
                     msg: "unsupported strategy".to_string()
                 })),
             }).flatten().collect();
+
+        result.sort_by(|(_, a_value), (_, b_value)| {
+            b_value.cmp(&a_value)
+        });
 
         result
     }
