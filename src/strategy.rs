@@ -1,15 +1,15 @@
-use std::rc::Rc;
-use std::cell::RefCell;
 use crate::{battle::BattleField, battle_action::BattleFieldMutation, Result};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 pub struct ActionStrategyContext<'a> {
     pub battle_field: &'a BattleField,
     pub mutation: Box<dyn BattleFieldMutation>,
 }
 
-pub struct PreemptiveStrategyContext<'a> {
-    pub battle_field: &'a RefCell<BattleField>,
-    pub mutation: Rc<dyn BattleFieldMutation>,
+pub struct PreemptiveStrategyContext {
+    pub battle_field: Rc<RefCell<BattleField>>,
+    pub mutation: Box<dyn BattleFieldMutation>,
 }
 
 pub trait ActionStrategy {
@@ -20,5 +20,4 @@ pub trait PreemptiveStrategy {
     fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<usize>;
 }
 
-pub trait BattleStrategy: ActionStrategy + PreemptiveStrategy {
-}
+pub trait BattleStrategy: ActionStrategy + PreemptiveStrategy {}

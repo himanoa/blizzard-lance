@@ -1,19 +1,19 @@
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 
 use anyhow::anyhow;
 
-use crate::battle::{BattleField,BattleActor};
+use crate::battle::{BattleActor, BattleField};
 use crate::battle_action::BattleFieldMutationImpl;
-use crate::strategy::{PreemptiveStrategy, PreemptiveStrategyContext};
-use crate::storategies::Strategies;
-use crate::Result;
 use crate::error::ApplicationError;
+use crate::storategies::Strategies;
+use crate::strategy::{PreemptiveStrategy, PreemptiveStrategyContext};
+use crate::Result;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct BattleExecutor {
     pub battle_field: Rc<RefCell<BattleField>>,
-    pub current_turn: usize
+    pub current_turn: usize,
 }
 
 impl BattleExecutor {
@@ -21,27 +21,29 @@ impl BattleExecutor {
         unimplemented!()
     }
 
-    pub fn execute_preemptive_phase(&self) -> Result<impl Iterator<Item=&BattleActor>> {
-        let field = self.battle_field.clone();
-        let ctx = Rc::new(PreemptiveStrategyContext {
-            battle_field: field.as_ref(),
-            mutation: Rc::new(
-                BattleFieldMutationImpl::new(
-                    unimplemented!()
-                )
-            )
-        });
-        let field = self.battle_field.clone();
-        let results: Vec<(&BattleActor, usize)> = field.into_inner().available_actors().map(|actor| {
-            match &actor.strategy {
+    fn get_battle_field(rc: Rc<RefCell<BattleField>>) -> BattleField {
+        rc.borrow().clone()
+    }
+
+    pub fn execute_preemptive_phase(&self) -> Vec<(BattleActor, usize)> {
+        let result: Vec<(BattleActor, usize)> = BattleExecutor::get_battle_field(self.battle_field.clone())
+            .available_actors()
+            .map(move |actor| match &actor.strategy {
                 Strategies::DummyStrategy(strategy) => {
+                    let mutation = BattleFieldMutationImpl::new(self.battle_field.clone());
+
+                    let ctx = PreemptiveStrategyContext {
+                        battle_field: self.battle_field.clone(),
+                        mutation: Box::new(mutation),
+                    };
                     let value = strategy.execute(&ctx)?;
-                    Ok((actor, value))
-                },
-                _ => Err(anyhow!(ApplicationError::PreemtiveStrategyError{msg: "unsupported strategy".to_string()}))
-            }
-        }).flatten().collect();
-        results.sort_by(|(_, a_value), (_, b_value)| { b_value.cmp(&a_value) });
-        Ok(results.iter().map(|(actor, _)| *actor))
+                    Ok((actor.clone(), value))
+                }
+                _ => Err(anyhow!(ApplicationError::PreemtiveStrategyError {
+                    msg: "unsupported strategy".to_string()
+                })),
+            }).flatten().collect();
+
+        result
     }
 }

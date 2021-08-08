@@ -1,6 +1,8 @@
-use std::cell::RefCell;
 use crate::battle::{BattleActor, BattleArea, BattleField};
 use crate::ryodansekai::Skill;
+use std::borrow::Borrow;
+use std::cell::RefCell;
+use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum ActorAction {
@@ -32,20 +34,24 @@ pub trait BattleFieldMutation {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct BattleFieldMutationImpl<'a> {
+pub struct BattleFieldMutationImpl {
     applied_actions: Vec<ActorAction>,
-    current_state: &'a mut BattleField,
+    current_state: Rc<RefCell<BattleField>>,
 }
 
-impl<'a> BattleFieldMutationImpl<'a> {
-    pub fn new(current_state: &'a mut BattleField) -> Self {
-        BattleFieldMutationImpl { applied_actions: vec![], current_state }
+impl BattleFieldMutationImpl {
+    pub fn new(current_state: Rc<RefCell<BattleField>>) -> Self {
+        BattleFieldMutationImpl {
+            applied_actions: vec![],
+            current_state,
+        }
     }
 }
 
-impl<'a> BattleFieldMutation for BattleFieldMutationImpl<'a> {
+impl BattleFieldMutation for BattleFieldMutationImpl {
     fn dispatch(&mut self, action: &ActorAction) {
-        *self.current_state = reducer(self.current_state, action);
+        let mut a = self.current_state.borrow_mut();
+        *a = reducer(a.borrow(), action);
         self.applied_actions.push(action.clone());
     }
 }

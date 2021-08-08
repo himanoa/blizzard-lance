@@ -4,7 +4,7 @@ pub mod dummy_storategy;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Strategies {
-    DummyStrategy(DummyStrategy)
+    DummyStrategy(DummyStrategy),
 }
 
 impl Default for Strategies {

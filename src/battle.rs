@@ -12,7 +12,7 @@ impl Default for BattleActor {
         Self {
             current_position: BattleArea::PlayerRearGuard,
             actor: Default::default(),
-            strategy: Default::default()
+            strategy: Default::default(),
         }
     }
 }
@@ -73,9 +73,7 @@ impl BattleField {
     pub fn available_actors(&self) -> impl Iterator<Item = &BattleActor> {
         self.participating_actors
             .iter()
-            .filter(|participating_actor| {
-                participating_actor.is_available()
-            })
+            .filter(|participating_actor| participating_actor.is_available())
     }
 }
 
@@ -142,10 +140,19 @@ mod tests {
         let actual_actors: Vec<BattleActor> = battle_field.available_actors().cloned().collect();
         assert_eq!(
             actual_actors,
-            vec![battle_field.participating_actors[0].clone(), battle_field.participating_actors[1].clone()]
+            vec![
+                battle_field.participating_actors[0].clone(),
+                battle_field.participating_actors[1].clone()
+            ]
         );
-        dbg!("{:?}", battle_field.available_actors().chain(battle_field.middle_guard_actors()).collect::<Vec<&BattleActor>>());
-        assert!(1==2);
+        dbg!(
+            "{:?}",
+            battle_field
+                .available_actors()
+                .chain(battle_field.middle_guard_actors())
+                .collect::<Vec<&BattleActor>>()
+        );
+        assert!(1 == 2);
     }
 
     #[test]
@@ -157,5 +164,4 @@ mod tests {
         unavailable_actor.actor.abillity.hp = 0;
         assert_eq!(unavailable_actor.is_available(), false);
     }
-
 }

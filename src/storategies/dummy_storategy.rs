@@ -1,8 +1,5 @@
 use crate::strategy::{
-    ActionStrategy,
-    BattleStrategy,
-    PreemptiveStrategy,
-    ActionStrategyContext,
+    ActionStrategy, ActionStrategyContext, BattleStrategy, PreemptiveStrategy,
     PreemptiveStrategyContext,
 };
 use crate::Result;
@@ -23,4 +20,3 @@ impl PreemptiveStrategy for DummyStrategy {
 }
 
 impl BattleStrategy for DummyStrategy {}
-
