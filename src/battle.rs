@@ -1,9 +1,10 @@
-use crate::ryodansekai::Actor;
+use crate::{ryodansekai::Actor, storategies::Strategies};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BattleActor {
     current_position: BattleArea,
     actor: Actor,
+    strategy: Strategies,
 }
 
 impl Default for BattleActor {
@@ -11,6 +12,7 @@ impl Default for BattleActor {
         Self {
             current_position: BattleArea::PlayerRearGuard,
             actor: Default::default(),
+            strategy: Default::default()
         }
     }
 }

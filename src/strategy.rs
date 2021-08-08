@@ -19,6 +19,6 @@ pub trait PreemptiveStrategy {
 }
 
 pub trait BattleStrategy {
-    fn action_stragegy() -> Box<dyn ActionStrategy>;
-    fn preemptive_strategy() -> Box<dyn PreemptiveStrategy>;
+    fn action_stragegy(&self) -> Box<&dyn ActionStrategy>;
+    fn preemptive_strategy(&self) -> Box<&dyn PreemptiveStrategy>;
 }
