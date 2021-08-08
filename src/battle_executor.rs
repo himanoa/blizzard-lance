@@ -18,15 +18,12 @@ pub struct BattleExecutor {
 
 impl BattleExecutor {
     pub fn run(&mut self) -> Result<()> {
+        let sorted_actors = self.execute_preemptive_phase();
         unimplemented!()
     }
 
-    fn get_battle_field(rc: Rc<RefCell<BattleField>>) -> BattleField {
-        rc.borrow().clone()
-    }
-
     pub fn execute_preemptive_phase(&self) -> Vec<(BattleActor, usize)> {
-        let mut result: Vec<(BattleActor, usize)> = BattleExecutor::get_battle_field(self.battle_field.clone())
+        let mut result: Vec<(BattleActor, usize)> = self.battle_field.borrow()
             .available_actors()
             .map(move |actor| match &actor.strategy {
                 Strategies::DummyStrategy(strategy) => {
