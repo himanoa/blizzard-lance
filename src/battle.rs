@@ -3,14 +3,14 @@ use crate::ryodansekai::Actor;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BattleActor {
     current_position: BattleArea,
-    actor: Actor
+    actor: Actor,
 }
 
 impl Default for BattleActor {
     fn default() -> Self {
         Self {
             current_position: BattleArea::PlayerRearGuard,
-            actor: Default::default()
+            actor: Default::default(),
         }
     }
 }
@@ -19,7 +19,7 @@ impl Default for BattleActor {
 pub enum BattleArea {
     PlayerRearGuard,
     MiddleGuard,
-    EnemyRearGuard
+    EnemyRearGuard,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -30,47 +30,62 @@ pub struct BattleField {
 
 impl BattleField {
     pub fn new(participating_actors: Vec<BattleActor>) -> Self {
-        Self { participating_actors, current_turn: 1 }
+        Self {
+            participating_actors,
+            current_turn: 1,
+        }
     }
 
     #[allow(dead_code)]
-    fn player_rear_guard_actors(&self) -> impl Iterator<Item=&BattleActor>
-    {
-        self.participating_actors.iter().filter(|participating_actor| {
-            participating_actor.current_position == BattleArea::PlayerRearGuard
-        })
+    fn player_rear_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
+        self.participating_actors
+            .iter()
+            .filter(|participating_actor| {
+                participating_actor.current_position == BattleArea::PlayerRearGuard
+            })
     }
 
     #[allow(dead_code)]
-    fn middle_guard_actors(&self) -> impl Iterator<Item=&BattleActor>
-    {
-        self.participating_actors.iter().filter(|participating_actor| {
-            participating_actor.current_position == BattleArea::MiddleGuard
-        })
+    fn middle_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
+        self.participating_actors
+            .iter()
+            .filter(|participating_actor| {
+                participating_actor.current_position == BattleArea::MiddleGuard
+            })
     }
 
     #[allow(dead_code)]
-    fn enemy_rear_actors(&self) -> impl Iterator<Item=&BattleActor>
-    {
-        self.participating_actors.iter().filter(|participating_actor| {
-            participating_actor.current_position == BattleArea::EnemyRearGuard
-        })
+    fn enemy_rear_actors(&self) -> impl Iterator<Item = &BattleActor> {
+        self.participating_actors
+            .iter()
+            .filter(|participating_actor| {
+                participating_actor.current_position == BattleArea::EnemyRearGuard
+            })
     }
 }
 
 #[cfg(test)]
-mod tests{
-    use super::{BattleField, BattleArea, BattleActor};
-    
+mod tests {
+    use super::{BattleActor, BattleArea, BattleField};
+
     impl Default for BattleField {
         fn default() -> Self {
             BattleField {
                 participating_actors: vec![
-                    BattleActor { current_position: BattleArea::PlayerRearGuard , ..Default::default() },
-                    BattleActor { current_position: BattleArea::MiddleGuard , ..Default::default() },
-                    BattleActor { current_position: BattleArea::EnemyRearGuard , ..Default::default() },
+                    BattleActor {
+                        current_position: BattleArea::PlayerRearGuard,
+                        ..Default::default()
+                    },
+                    BattleActor {
+                        current_position: BattleArea::MiddleGuard,
+                        ..Default::default()
+                    },
+                    BattleActor {
+                        current_position: BattleArea::EnemyRearGuard,
+                        ..Default::default()
+                    },
                 ],
-                current_turn: 1
+                current_turn: 1,
             }
         }
     }
@@ -78,7 +93,8 @@ mod tests{
     #[test]
     fn test_player_rear_guard_actors() {
         let battle_field: BattleField = Default::default();
-        let actual_actors: Vec<BattleActor> = battle_field.player_rear_guard_actors().cloned().collect();
+        let actual_actors: Vec<BattleActor> =
+            battle_field.player_rear_guard_actors().cloned().collect();
         assert_eq!(
             actual_actors,
             vec![battle_field.participating_actors[0].clone()]

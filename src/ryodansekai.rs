@@ -1,5 +1,5 @@
-use std::default::Default;
 use crate::weapon::Weapon;
+use std::default::Default;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Abillity {

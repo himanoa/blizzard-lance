@@ -158,7 +158,7 @@ pub enum Weapon {
     MediumWeightWeapon(MediumWeightWeapon),
     HeavyWeightWeapon(HeavyWeightWeapon),
     PhysicalStrengthShootingWeapon(PhysicalStrengthShootingWeapon),
-    MechanicalShootingWeapon(MechanicalShootingWeapon)
+    MechanicalShootingWeapon(MechanicalShootingWeapon),
 }
 
 #[cfg(test)]
