@@ -1,4 +1,7 @@
-use crate::{battle::BattleField, battle_action::{ActorAction, BattleFieldMutation}};
+use crate::{
+    battle::BattleField,
+    battle_action::{ActorAction, BattleFieldMutation},
+};
 
 pub struct ActionStrategyContext<'a> {
     pub battle_field: &'a BattleField,
@@ -18,8 +21,7 @@ pub trait PreemptiveStrategy {
     fn execute(&self, ctx: &PreemptiveStrategyContext) -> Vec<ActorAction>;
 }
 
-pub trait BattleStrategy
-{
+pub trait BattleStrategy {
     fn action_stragegy() -> Box<dyn ActionStrategy>;
     fn preemptive_strategy() -> Box<dyn PreemptiveStrategy>;
 }
