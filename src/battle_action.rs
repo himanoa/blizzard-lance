@@ -30,15 +30,15 @@ pub trait BattleFieldMutation {
     fn dispatch(&mut self, action: &ActorAction);
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct BattleFieldMutationImpl {
+#[derive(Debug, PartialEq, Eq)]
+pub struct BattleFieldMutationImpl<'a> {
     applied_actions: Vec<ActorAction>,
-    current_state: BattleField,
+    current_state: &'a mut BattleField,
 }
 
-impl BattleFieldMutation for BattleFieldMutationImpl {
+impl<'a> BattleFieldMutation for BattleFieldMutationImpl<'a> {
     fn dispatch(&mut self, action: &ActorAction){
-        self.current_state = reducer(&self.current_state, action);
+        *self.current_state = reducer(&self.current_state, action);
         self.applied_actions.push(action.clone());
     }
 }
