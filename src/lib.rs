@@ -8,4 +8,4 @@ pub mod storategies;
 pub mod weapon;
 pub mod battle_executor;
 
-pub type Result<T> = std::result::Result<T, error::ApplicationError>;
+pub type Result<T> = anyhow::Result<T>;

@@ -2,9 +2,9 @@ use crate::{ryodansekai::Actor, storategies::Strategies};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BattleActor {
-    current_position: BattleArea,
-    actor: Actor,
-    strategy: Strategies,
+    pub current_position: BattleArea,
+    pub actor: Actor,
+    pub strategy: Strategies,
 }
 
 impl Default for BattleActor {
@@ -43,7 +43,7 @@ impl BattleField {
     }
 
     #[allow(dead_code)]
-    fn player_rear_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
+    pub fn player_rear_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
         self.participating_actors
             .iter()
             .filter(|participating_actor| {
@@ -52,7 +52,7 @@ impl BattleField {
     }
 
     #[allow(dead_code)]
-    fn middle_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
+    pub fn middle_guard_actors(&self) -> impl Iterator<Item = &BattleActor> {
         self.participating_actors
             .iter()
             .filter(|participating_actor| {
@@ -61,7 +61,7 @@ impl BattleField {
     }
 
     #[allow(dead_code)]
-    fn enemy_rear_actors(&self) -> impl Iterator<Item = &BattleActor> {
+    pub fn enemy_rear_actors(&self) -> impl Iterator<Item = &BattleActor> {
         self.participating_actors
             .iter()
             .filter(|participating_actor| {
@@ -70,7 +70,7 @@ impl BattleField {
     }
 
     #[allow(dead_code)]
-    fn available_actors(&self) -> impl Iterator<Item = &BattleActor> {
+    pub fn available_actors(&self) -> impl Iterator<Item = &BattleActor> {
         self.participating_actors
             .iter()
             .filter(|participating_actor| {
@@ -143,7 +143,9 @@ mod tests {
         assert_eq!(
             actual_actors,
             vec![battle_field.participating_actors[0].clone(), battle_field.participating_actors[1].clone()]
-        )
+        );
+        dbg!("{:?}", battle_field.available_actors().chain(battle_field.middle_guard_actors()).collect::<Vec<&BattleActor>>());
+        assert!(1==2);
     }
 
     #[test]
@@ -154,7 +156,6 @@ mod tests {
         let mut unavailable_actor: BattleActor = Default::default();
         unavailable_actor.actor.abillity.hp = 0;
         assert_eq!(unavailable_actor.is_available(), false);
-        
     }
 
 }

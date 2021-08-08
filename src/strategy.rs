@@ -1,3 +1,5 @@
+use std::rc::Rc;
+use std::cell::RefCell;
 use crate::{battle::BattleField, battle_action::BattleFieldMutation, Result};
 
 pub struct ActionStrategyContext<'a> {
@@ -6,8 +8,8 @@ pub struct ActionStrategyContext<'a> {
 }
 
 pub struct PreemptiveStrategyContext<'a> {
-    pub battle_field: &'a BattleField,
-    pub mutation: Box<dyn BattleFieldMutation>,
+    pub battle_field: &'a RefCell<BattleField>,
+    pub mutation: Rc<dyn BattleFieldMutation>,
 }
 
 pub trait ActionStrategy {

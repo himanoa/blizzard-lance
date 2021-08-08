@@ -1,3 +1,4 @@
+use std::cell::RefCell;
 use crate::battle::{BattleActor, BattleArea, BattleField};
 use crate::ryodansekai::Skill;
 
@@ -34,6 +35,12 @@ pub trait BattleFieldMutation {
 pub struct BattleFieldMutationImpl<'a> {
     applied_actions: Vec<ActorAction>,
     current_state: &'a mut BattleField,
+}
+
+impl<'a> BattleFieldMutationImpl<'a> {
+    pub fn new(current_state: &'a mut BattleField) -> Self {
+        BattleFieldMutationImpl { applied_actions: vec![], current_state }
+    }
 }
 
 impl<'a> BattleFieldMutation for BattleFieldMutationImpl<'a> {
