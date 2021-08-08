@@ -1,6 +1,7 @@
 use crate::{
     battle::BattleField,
-    battle_action::{ActorAction, BattleFieldMutation},
+    battle_action::BattleFieldMutation,
+    Result
 };
 
 pub struct ActionStrategyContext<'a> {
@@ -14,11 +15,11 @@ pub struct PreemptiveStrategyContext<'a> {
 }
 
 pub trait ActionStrategy {
-    fn execute(&self, ctx: &ActionStrategyContext) -> Vec<ActorAction>;
+    fn execute(&self, ctx: &ActionStrategyContext) -> Result<()>;
 }
 
 pub trait PreemptiveStrategy {
-    fn execute(&self, ctx: &PreemptiveStrategyContext) -> Vec<ActorAction>;
+    fn execute(&self, ctx: &PreemptiveStrategyContext) -> Result<()>;
 }
 
 pub trait BattleStrategy {

@@ -6,6 +6,10 @@ pub enum ApplicationError {
     ActionStrategyError {
         msg: String
     },
+    #[error("preemtive strategy error {msg:?}")]
+    PreemtiveStrategyError {
+        msg: String
+    },
     #[error("unknown application error")]
     Unknown,
 }
