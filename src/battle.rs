@@ -8,5 +8,7 @@ pub struct BattleArea {
 }
 
 struct BattleField {
-    area: BattleArea
+    area: BattleArea,
+    current_turn: usize,
+
 }
