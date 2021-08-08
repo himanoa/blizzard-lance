@@ -1,8 +1,4 @@
-use crate::{
-    battle::BattleField,
-    battle_action::BattleFieldMutation,
-    Result
-};
+use crate::{battle::BattleField, battle_action::BattleFieldMutation, Result};
 
 pub struct ActionStrategyContext<'a> {
     pub battle_field: &'a BattleField,
