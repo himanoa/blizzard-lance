@@ -3,6 +3,8 @@ use std::default::Default;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Abillity {
+    pub max_hp: isize,
+    pub hp: isize,
     pub py_str: isize,
     pub dex: isize,
     pub int: isize,
@@ -14,6 +16,8 @@ pub struct Abillity {
 impl Default for Abillity {
     fn default() -> Self {
         Self {
+            max_hp: 5,
+            hp: 5,
             py_str: 1,
             dex: 1,
             int: 1,

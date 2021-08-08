@@ -17,6 +17,12 @@ impl Default for BattleActor {
     }
 }
 
+impl BattleActor {
+    pub fn is_available(&self) -> bool {
+        self.actor.abillity.hp > 0
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum BattleArea {
     PlayerRearGuard,
@@ -27,14 +33,12 @@ pub enum BattleArea {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BattleField {
     participating_actors: Vec<BattleActor>,
-    current_turn: usize,
 }
 
 impl BattleField {
     pub fn new(participating_actors: Vec<BattleActor>) -> Self {
         Self {
             participating_actors,
-            current_turn: 1,
         }
     }
 
@@ -64,6 +68,15 @@ impl BattleField {
                 participating_actor.current_position == BattleArea::EnemyRearGuard
             })
     }
+
+    #[allow(dead_code)]
+    fn available_actors(&self) -> impl Iterator<Item = &BattleActor> {
+        self.participating_actors
+            .iter()
+            .filter(|participating_actor| {
+                participating_actor.is_available()
+            })
+    }
 }
 
 #[cfg(test)]
@@ -87,7 +100,6 @@ mod tests {
                         ..Default::default()
                     },
                 ],
-                current_turn: 1,
             }
         }
     }
@@ -122,4 +134,27 @@ mod tests {
             vec![battle_field.participating_actors[2].clone()]
         )
     }
+
+    #[test]
+    fn test_available_actors() {
+        let mut battle_field: BattleField = Default::default();
+        battle_field.participating_actors[2].actor.abillity.hp = 0;
+        let actual_actors: Vec<BattleActor> = battle_field.available_actors().cloned().collect();
+        assert_eq!(
+            actual_actors,
+            vec![battle_field.participating_actors[0].clone(), battle_field.participating_actors[1].clone()]
+        )
+    }
+
+    #[test]
+    fn test_battle_actor_is_available() {
+        let available_actor: BattleActor = Default::default();
+        assert_eq!(available_actor.is_available(), true);
+
+        let mut unavailable_actor: BattleActor = Default::default();
+        unavailable_actor.actor.abillity.hp = 0;
+        assert_eq!(unavailable_actor.is_available(), false);
+        
+    }
+
 }
